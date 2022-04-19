@@ -24,6 +24,7 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.delegate = self
         tableView.reloadData()
         initialSetup()  // вызовем метод для отслеживания уведомления о появлении клавиатуры
+        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell1")
     }
     
     override func viewWillAppear (_ animated: Bool) {
@@ -130,15 +131,15 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // тут мы создаем ячейку которую будем возвращать каждый раз, ей мы присваиваем то что возвращает метод dequeueReusableCell из tableView , указывая индекс "Cell1" из сториборда
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell1", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! CustomTableViewCell
         
         // здесь можно вывести данные в ячейку слева и справа, заранее выбрав в сториборде в стилях ячейки вариант Right Detail
         
         // создаем переменную и помещаем в нее один экземпляр массива по номеру indexPath.row
         let model = usersArray.usersArray[indexPath.row]
         
-        cell.textLabel?.text = model.name
-        cell.detailTextLabel?.text = String(model.score)
+        cell.nameLabel.text = model.name
+        cell.scoreLabel.text = String(model.score)
         // также в ячейку можно вывести картинку через свойство .image
         // cell.imageView?.image = UIImage(named: "XXXXXXX")
         
@@ -247,27 +248,26 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     private func tableView(_ tableView: AddUserNameViewController, didSelectRowAt indexPath: IndexPath) {
         
         // выполняем переход. в качестве sender-аргумента советую отправить IndexPath ячейки, откуда отправляете
-        performSegue(withIdentifier: "SegueCellToViewController", sender: indexPath)
-    }
-    // после этого осуществляете подготовку к переходу на контроллер
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        performSegue(withIdentifier: "ViewController", sender: indexPath)
         
-        // Проверяем идентификатор сегвея
-        switch segue.identifier! {
-        case "SegueCellToViewController":
-            let dvc = segue.destination as! ViewController // Это имя контроллера View, на который осуществляется переход
+        
+        // после этого осуществляете подготовку к переходу на контроллер
+        func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             
-            // в данном случае мы передаем переменную usersArray класса UsersArray на наш ViewController помещая его в свойство valueReceivedFromAddUserNameViewController
-            dvc.valueReceivedFromAddUserNameViewController = usersArray
-            //dvc.currentUser = indexPath
-        default:
-            break
+            // Проверяем идентификатор сегвея
+            switch segue.identifier! {
+            case "seg1":
+                let dvc = segue.destination as! ViewController // Это имя контроллера View, на который осуществляется переход
+                
+                // в данном случае мы передаем переменную usersArray класса UsersArray на наш ViewController помещая его в свойство valueReceivedFromAddUserNameViewController
+                dvc.valueReceivedFromAddUserNameViewController = usersArray
+                //dvc.currentUser = indexPath
+            default:
+                break
+            }
         }
     }
-    
-    
     //--------------------------------------------------------------------------------------------------------------
-    
 }
 
 
