@@ -10,6 +10,8 @@ import UIKit
 class AddUserNameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var usersArray = UsersArray()
+    var currentNameInAddUserNameViewController: String?
+    
     
     @IBOutlet weak var textFieldForUserName: UITextField!       // создаем IBOutlet для текстого поля для ввода имни нового пользователя
     @IBOutlet weak var nameSaveButtonOutlet: UIButton!          // создаем IBOutlet для кнопки
@@ -121,7 +123,6 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     //  *** Логика работы таблицы
-    
     // этот обязательный метод возвращает нам количество строк в секции таблицы
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usersArray.usersArray.count
@@ -237,6 +238,22 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         
         return UISwipeActionsConfiguration(actions: [editAction])
         
+    }
+    
+    // при нажатии на кнопку в кастомной ячейке будет совершен переход на другой
+    // экран (контроллер ViewController) по сивею от кнопки, эта конструкция передаст
+    // данные о выбраном пользователе и массив данных обо всех пользователях из UserDefaults (пока не реализовано)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        
+        let dvc = segue.destination as! ViewController
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1") as! CustomTableViewCell
+        //let cell = tableView.indexPath(for: <#T##UITableViewCell#>)
+        print (cell.nameLabel.text as Any)
+        print (cell.scoreLabel.text as Any)
+        
+        dvc.currentUser = User(name: cell.nameLabel.text!, score: cell.scoreLabel.text!)
+        dvc.usersArray = usersArray
+
     }
     
     //--------------------------------------------------------------------------------------------------------------

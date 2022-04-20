@@ -12,7 +12,9 @@ import UIKit
 class ViewController: UIViewController { // 2
 
     var valueReceivedFromAddUserNameViewController = UsersArray()
-    var currentUser = User(name: "", score: "")
+    var usersArray = UsersArray()
+    var currentUser = User(name: "www", score: "www")
+    
     
     @IBOutlet weak var labelVC: UILabel!
     
@@ -20,7 +22,10 @@ class ViewController: UIViewController { // 2
     var taskMarkers = [false, false, false, false, false]
     
     override func viewDidLoad() {
-
+        
+        print(currentUser.name)
+        print(currentUser.score)
+        
         super.viewDidLoad()
         labelVC.layer.masksToBounds = true
         labelVC.layer.cornerRadius = 10
