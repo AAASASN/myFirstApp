@@ -23,8 +23,22 @@ class ViewController: UIViewController { // 2
     
     override func viewDidLoad() {
         
-        print(currentUser.name)
-        print(currentUser.score)
+        // загрузив текущий контроллер вытасткиваем из ЮзерДефолтс имя пользователя
+        // сохраненного на предыдущем контроллере
+        let currentUserNameDefaults = UserDefaults.standard
+        let currentUserName = currentUserNameDefaults.object(forKey: "currentUserKey") as! String
+        
+        // затем также вытаскиваем счет этого пользователя из другого UserDefaults по сути
+        // ключем будет имя currentUserName вытащеное из UserDefaults в предыдущей конструкции плюс слово "key"
+        let currentUserScoreDefaults = UserDefaults.standard
+        let currentUserScore = currentUserScoreDefaults.object(forKey: currentUserName + "key") as! String
+        
+        
+        // выведем полученное имя пользователя и счет в лейбл
+        labelVC.text = "Привет " + currentUserName + ", пока твой счет равен " + currentUserScore + ", выбери задание и начни тренироваться."
+
+        print(currentUserName)
+
         
         super.viewDidLoad()
         labelVC.layer.masksToBounds = true

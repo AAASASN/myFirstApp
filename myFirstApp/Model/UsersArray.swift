@@ -20,7 +20,7 @@ class UsersArray {
 //        self.usersArray.append(u)
 //    }
     
-    // метод для проверки есть ли пользователь с именем string : в массиве usersArray нашего класса UsersArray
+    // метод для проверки есть ли пользователь с именем string в массиве usersArray нашего класса UsersArray
     func isItemInArrayInClassUsersArray(string : String) -> Bool{
         var usersCount = 0
         for item in usersArray {

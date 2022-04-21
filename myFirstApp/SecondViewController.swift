@@ -52,13 +52,45 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var button4tapped: UIButton!
     @IBOutlet weak var button5tapped: UIButton!
     
+    @IBAction func buttonBackAction(_ sender: UIButton) {
+        
+        // при уходе с контроллера
+        
+        // создаем переменную типа UserDefaults и в нее передадим счет игрока по ключу currentUser + "key"
+        let userNameForUserDefaults = UserDefaults.standard
+        
+        //записываем в нее значение currentUserTotal и указываем ключ с
+        // помощью которого потом извлечем это значение - это имя текущего пользователя плюс слово "key"
+        userNameForUserDefaults.set(String(currentUserTotal), forKey: currentUser + "key")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        // загрузив текущий контроллер вытасткиваем из ЮзерДефолтс имя пользователя
+        // сохраненного в контроллере AddUserNameViewController
+        let currentUserNameFromUserDefaultsFile = UserDefaults.standard
+        let currentUserNameFromUserDefaults = currentUserNameFromUserDefaultsFile.object(forKey: "currentUserKey") as! String
+        
+        // затем также вытаскиваем счет этого пользователя из другого UserDefaults по сути
+        // ключем будет имя currentUserName вытащеное из UserDefaults в предыдущей конструкции
+        let currentUserScoreFromUserDefaultsFile = UserDefaults.standard
+        let currentUserScoreFromUserDefaults = currentUserScoreFromUserDefaultsFile.object(forKey: currentUserNameFromUserDefaults + "key") as! String
+        
+        // помещаем имя пользователя и счет в верхний лейбл
+        labelSecondVC.text = "Привет " + currentUserNameFromUserDefaults + " твой счет равен " + currentUserScoreFromUserDefaults + "Нужно решить 40 примеров"
+        labelTotal.text = currentUserScoreFromUserDefaults
+        
+        // прибавляем счет из UserDefaults к веременной currentUserTotal который мы используем в рамках этого класса
+        currentUserTotal = currentUserTotal + Int(currentUserScoreFromUserDefaults)!
+        
+        // также к глобальной переменной класса присваиваем имя пользователя
+        // полученное из 
+        currentUser = currentUserNameFromUserDefaults
+        
         labelSecondVC.layer.masksToBounds = true
         labelSecondVC.layer.cornerRadius = 20
-        labelSecondVC.text = "Нужно решить 40 примеров"
         labelTotalMain.layer.masksToBounds = true
         labelTotalMain.layer.cornerRadius = 20
         buttonBack.layer.masksToBounds = true

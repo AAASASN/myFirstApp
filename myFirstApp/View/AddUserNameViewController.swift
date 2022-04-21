@@ -12,7 +12,6 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     var usersArray = UsersArray()
     var currentNameInAddUserNameViewController: String?
     
-    
     @IBOutlet weak var textFieldForUserName: UITextField!       // создаем IBOutlet для текстого поля для ввода имни нового пользователя
     @IBOutlet weak var nameSaveButtonOutlet: UIButton!          // создаем IBOutlet для кнопки
     @IBOutlet weak var startGameAfterUserSaving: UIButton!
@@ -20,13 +19,25 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var upLabel: UILabel!
+    
+    
     @objc override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.reloadData()
         initialSetup()  // вызовем метод для отслеживания уведомления о появлении клавиатуры
         //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell1")
+        
+        if usersArray.usersArray.count == 0 {
+            upLabel.text = "Создайте нового пользователя"
+        } else {
+            upLabel.text = "Выберите пользователя"
+        }
     }
     
     override func viewWillAppear (_ animated: Bool) {
@@ -92,7 +103,8 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
             alertController.addAction(okAction) // добавляем UIAlertAction в UIAlertController
             self.present(alertController, animated: true, completion: nil) // вызываем  UIAlertController
             
-        } else {
+        } else { // иначе если имя пользователя не равно == ""
+            
             if usersArray.isItemInArrayInClassUsersArray(string: textFieldForUserName.text!) {
                 // если пользователь с именем введенным в textFieldForUserName уже существует в usersArray отработает alertController сообщив об этом
                 // создадим UIAlertController
@@ -108,11 +120,11 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
                 usersArray.addUserToUsersArrayAndSort(user: User(name: textFieldForUserName.text!, score: "0"))
                 // сразу после добавления пользователя в массив обновляем tableView
                 tableView.reloadData()
-            }
+                }
             
             // очищаем текстовое поле перед началом очередного ввода
             textFieldForUserName.text! = ""
-            
+            upLabel.text = "Выберите пользователя"
             // это просто печать в консоль массива usersArray класса
             print("--------------------------------")
             for item in usersArray.usersArray {
@@ -144,6 +156,11 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         // также в ячейку можно вывести картинку через свойство .image
         // cell.imageView?.image = UIImage(named: "XXXXXXX")
         
+        // далее сохраняем счет игры  - score в UserDefauls, в качестве ключа используем имя пользователя соединенное со словом "key"
+        // это нужно для того чтобы на ViewController и затем на SecondViewController передавать счет по конкретному игроку
+        let userDefaultsForUser = UserDefaults.standard
+        userDefaultsForUser.set((cell.scoreLabel.text!), forKey: cell.nameLabel.text! + "key")
+    
         return cell
     }
     
@@ -240,50 +257,56 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         
     }
     
-    // при нажатии на кнопку в кастомной ячейке будет совершен переход на другой
-    // экран (контроллер ViewController) по сивею от кнопки, эта конструкция передаст
-    // данные о выбраном пользователе и массив данных обо всех пользователях из UserDefaults (пока не реализовано)
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        
-        let dvc = segue.destination as! ViewController
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1") as! CustomTableViewCell
-        //let cell = tableView.indexPath(for: <#T##UITableViewCell#>)
-        print (cell.nameLabel.text as Any)
-        print (cell.scoreLabel.text as Any)
-        
-        dvc.currentUser = User(name: cell.nameLabel.text!, score: cell.scoreLabel.text!)
-        dvc.usersArray = usersArray
-
-    }
-    
-    //--------------------------------------------------------------------------------------------------------------
-    // Попытка реализовать передачу данных от контроллера AddUserNameViewController к контроллеру ViewController
-    
-    // устанавливаем действие при выделении ячейки
+//    Здесь попытка передать данные на ViewController через сегвей  (не работает)
+//
+//    // при нажатии на кнопку в кастомной ячейке будет совершен переход на другой
+//    // экран (контроллер ViewController) по сивею от кнопки, эта конструкция передаст
+//    // данные о выбраном пользователе и массив данных обо всех пользователях из UserDefaults (пока не реализовано)
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+//
+//        let dvc = segue.destination as! ViewController
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1") as! CustomTableViewCell
+//        //let cell = tableView.indexPath(for: <#T##UITableViewCell#>)
+//        print (cell.nameLabel.text as Any)
+//        print (cell.scoreLabel.text as Any)
+//
+//        dvc.currentUser = User(name: cell.nameLabel.text!, score: cell.scoreLabel.text!)
+//        dvc.usersArray = usersArray
+//
+//    }
     
     
-    private func tableView(_ tableView: AddUserNameViewController, didSelectRowAt indexPath: IndexPath) {
-        
-        // выполняем переход. в качестве sender-аргумента советую отправить IndexPath ячейки, откуда отправляете
-        performSegue(withIdentifier: "ViewController", sender: indexPath)
-        
-        
-        // после этого осуществляете подготовку к переходу на контроллер
-        func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            
-            // Проверяем идентификатор сегвея
-            switch segue.identifier! {
-            case "seg1":
-                let dvc = segue.destination as! ViewController // Это имя контроллера View, на который осуществляется переход
-                
-                // в данном случае мы передаем переменную usersArray класса UsersArray на наш ViewController помещая его в свойство valueReceivedFromAddUserNameViewController
-                dvc.valueReceivedFromAddUserNameViewController = usersArray
-                //dvc.currentUser = indexPath
-            default:
-                break
-            }
-        }
-    }
+    
+//
+//    //--------------------------------------------------------------------------------------------------------------
+//    // Попытка реализовать передачу данных от контроллера AddUserNameViewController к контроллеру ViewController
+//
+//    // устанавливаем действие при выделении ячейки
+//
+//
+//    private func tableView(_ tableView: AddUserNameViewController, didSelectRowAt indexPath: IndexPath) {
+//
+//        // выполняем переход. в качестве sender-аргумента советую отправить IndexPath ячейки, откуда отправляете
+//        performSegue(withIdentifier: "ViewController", sender: indexPath)
+//
+//
+//        // после этого осуществляете подготовку к переходу на контроллер
+//        func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//            // Проверяем идентификатор сегвея
+//            switch segue.identifier! {
+//            case "seg1":
+//                let dvc = segue.destination as! ViewController // Это имя контроллера View, на который осуществляется переход
+//
+//                // в данном случае мы передаем переменную usersArray класса UsersArray на наш ViewController помещая его в свойство valueReceivedFromAddUserNameViewController
+//                dvc.valueReceivedFromAddUserNameViewController = usersArray
+//                //dvc.currentUser = indexPath
+//            default:
+//                break
+//            }
+//        }
+//    }
     //--------------------------------------------------------------------------------------------------------------
 }
 
