@@ -12,10 +12,14 @@ class User {
     var name = String ()
     var score = String ()
     
-        init(name: String, score: String) {
-            self.name = name
-            self.score = score
-        }
+    init(){
+
+    }
+    
+    init(name: String, score: String) {
+        self.name = name
+        self.score = score
+    }
     
     func setScore (name : String, score : String) {
         let defaults = UserDefaults.standard

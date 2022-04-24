@@ -10,6 +10,7 @@ import UIKit
 class AddUserNameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var usersArray = UsersArray()
+    
     var currentNameInAddUserNameViewController: String?
     
     @IBOutlet weak var textFieldForUserName: UITextField!       // создаем IBOutlet для текстого поля для ввода имни нового пользователя
@@ -25,7 +26,12 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     @objc override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        // это просто печать в консоль  массива usersArray класса usersArray
+        print("------ Это просто печать в консоль массива usersArray класса usersArray после загрузки контроллера AddUserNameViewController -----------------")
+        for item in usersArray.usersArray {
+            print("Имя - \(item.name), счет - \(item.score)")
+        }
+        print("------ Это окончание печати в консоль массива usersArray класса usersArray-----------------")
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -116,8 +122,11 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
                 alertController.addAction(okAction) // добавляем UIAlertAction в UIAlertController
                 self.present(alertController, animated: true, completion: nil) // вызываем  UIAlertController
             } else {
-                // если поле не пустое добавляеи пользователя в массив при помощи метода addUserToUsersArrayAndSort
+                // если поле не пустое добавляем пользователя в массив при помощи метода addUserToUsersArrayAndSort
                 usersArray.addUserToUsersArrayAndSort(user: User(name: textFieldForUserName.text!, score: "0"))
+                //
+                //попробуем сразу сохранить usersArray в UserDefaults
+                usersArray.setUsersArrayToUserDefaults()
                 // сразу после добавления пользователя в массив обновляем tableView
                 tableView.reloadData()
                 }
@@ -156,7 +165,9 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         // также в ячейку можно вывести картинку через свойство .image
         // cell.imageView?.image = UIImage(named: "XXXXXXX")
         
-        // далее сохраняем счет игры  - score в UserDefauls, в качестве ключа используем имя пользователя соединенное со словом "key"
+        // далее сохраняем все содержимое usersArray в UserDefaults при помощи ее собственного метода setUsersArrayToUserDefaults
+        self.usersArray.setUsersArrayToUserDefaults()
+        
         // это нужно для того чтобы на ViewController и затем на SecondViewController передавать счет по конкретному игроку
         let userDefaultsForUser = UserDefaults.standard
         userDefaultsForUser.set((cell.scoreLabel.text!), forKey: cell.nameLabel.text! + "key")
