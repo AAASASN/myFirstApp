@@ -10,20 +10,12 @@ import CloudKit
 
 class SecondViewController: UIViewController {
     
-    var userSettingsForSavingScore = UserSettingsForSavingScore()
-    
-    //    // создаем переменную UserDefaults для хранения в ней набраннных очков
-    //    var userScore = UserDefaults.standard
-    //
-    //    // объявляем ключ по которому будет доставаться счет игры из UserDefaults
-    //    let someKeyForUserDefaults = "someKeyForUserDefaults"
-    
-    var currentUser = ""
-    var currentUserTotal = 0
+    var usersArray = UsersArray()
+    var currentUser = (name: "", score: 0, isCurrentUser: false)
+    var currentUserTotalScore = 0
     var newBigTask: [[String]]?
     var answer = false
     var currentTask = 0
-    
     let buttonsColorFaultRed = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.65)
     let buttonsColorFaultGreen = UIColor(red: 0.00, green: 0.60, blue: 0.44, alpha: 0.81)
     
@@ -52,43 +44,23 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var button4tapped: UIButton!
     @IBOutlet weak var button5tapped: UIButton!
     
-    @IBAction func buttonBackAction(_ sender: UIButton) {
-        
-        // при уходе с контроллера
-        
-        // создаем переменную типа UserDefaults и в нее передадим счет игрока по ключу currentUser + "key"
-        let userNameForUserDefaults = UserDefaults.standard
-        
-        //записываем в нее значение currentUserTotal и указываем ключ с
-        // помощью которого потом извлечем это значение - это имя текущего пользователя плюс слово "key"
-        userNameForUserDefaults.set(String(currentUserTotal), forKey: currentUser + "key")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // обновляем usersArray вытаскивая из UserDefaults его текущее состояние
+        usersArray.getUsersArrayFromUserDefaultsByString()
         
-        // загрузив текущий контроллер вытасткиваем из ЮзерДефолтс имя пользователя
-        // сохраненного в контроллере AddUserNameViewController
-        let currentUserNameFromUserDefaultsFile = UserDefaults.standard
-        let currentUserNameFromUserDefaults = currentUserNameFromUserDefaultsFile.object(forKey: "currentUserKey") as! String
+        // обновляем currentUser помещая в него текущего пользователя из usersArray
+        currentUser = usersArray.getCurrentUserFromUsersArray()
         
-        // затем также вытаскиваем счет этого пользователя из другого UserDefaults по сути
-        // ключем будет имя currentUserName вытащеное из UserDefaults в предыдущей конструкции
-        let currentUserScoreFromUserDefaultsFile = UserDefaults.standard
-        let currentUserScoreFromUserDefaults = currentUserScoreFromUserDefaultsFile.object(forKey: currentUserNameFromUserDefaults + "key") as! String
+        currentUserTotalScore = currentUser.score
         
         // помещаем имя пользователя и счет в верхний лейбл
-        labelSecondVC.text = "Привет " + currentUserNameFromUserDefaults + " твой счет равен " + currentUserScoreFromUserDefaults + "Нужно решить 40 примеров"
-        labelTotal.text = currentUserScoreFromUserDefaults
+        labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+        labelTotal.text = String(currentUser.score)
         
-        // прибавляем счет из UserDefaults к веременной currentUserTotal который мы используем в рамках этого класса
-        currentUserTotal = currentUserTotal + Int(currentUserScoreFromUserDefaults)!
-        
-        // также к глобальной переменной класса присваиваем имя пользователя
-        // полученное из 
-        currentUser = currentUserNameFromUserDefaults
-        
+                
         labelSecondVC.layer.masksToBounds = true
         labelSecondVC.layer.cornerRadius = 20
         labelTotalMain.layer.masksToBounds = true
@@ -106,18 +78,6 @@ class SecondViewController: UIViewController {
         label5.layer.masksToBounds = true
         label5.layer.cornerRadius = 20
         
-        //        // выгружаем значение счета игры из UserDefaults и присваиваем его в
-        //        // текущее значение счета currentUserTotal и в лейбл для отображения
-        //        // на экране
-        //        currentUserTotal = userScore.integer(forKey: someKeyForUserDefaults)
-        //        labelTotal.text = String(currentUserTotal)
-        
-        // выгружаем значение счета игры из userSettingsForSavingScore и присваиваем его в
-        // текущее значение счета currentUserTotal и в лейбл для отображения
-        // на экране
-        
-        currentUserTotal = userSettingsForSavingScore.usersModel?.score ?? 0
-        labelTotal.text = String(currentUserTotal)
         
         guard let x = newBigTask else {return}
         let a = x[currentTask]
@@ -198,7 +158,7 @@ class SecondViewController: UIViewController {
             self.button5tapped.isHidden = true
         }
         
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [self] (_) in
             self.label1.text = b[0]
             self.label2.text = b[1]
             self.label3.text = b[2]
@@ -222,7 +182,7 @@ class SecondViewController: UIViewController {
             self.button3tapped.isHidden = false
             self.button4tapped.isHidden = false
             self.button5tapped.isHidden = false
-            self.labelTotal.text = String(self.currentUserTotal)
+            self.labelTotal.text = String(currentUserTotalScore)
             if self.currentTask >= x.count {
                 self.currentTask = 0
                 self.labelSecondVC.layer.masksToBounds = true
@@ -271,21 +231,30 @@ class SecondViewController: UIViewController {
     
     func currentUserTotalUpdate(result: Bool){
         if result {
-            currentUserTotal += 1
-            labelTotal.text = String(currentUserTotal)
+            currentUserTotalScore += 1
+            labelTotal.text = String(currentUserTotalScore)
+            // помещаем имя пользователя и счет в верхний лейбл
+            labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+            labelTotal.text = String(currentUserTotalScore)
         } else {
-            if currentUserTotal > 0 {
-                currentUserTotal -= 1
-                labelTotal.text = String(currentUserTotal)
+            if currentUserTotalScore > 0 {
+                currentUserTotalScore -= 1
+                labelTotal.text = String(currentUserTotalScore)
+                // помещаем имя пользователя и счет в верхний лейбл
+                labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+                labelTotal.text = String(currentUserTotalScore)
             }
         }
     }
     
-    // при нажатии кнопки Назад кроме перехода на предыдущий экран сохраняеи игровой
-    // счет в userSettingsForSavingScore, он уже используя вчтроенный в сетер механизм UserDefault
-    // сохранит счет в память устройства
+    // при нажатии кнопки Назад кроме перехода на предыдущий экран сохраняем игровой
+    // счет currentUserTotalScore в usersArray, а его далее при помощи метода saveUsersArrayToUserDefaultsByStringConvert,
+    // он уже используя встроенный механизм UserDefault сохранит счет в память устройства
     @IBAction func buttonBack(_ sender: UIButton) {
-        userSettingsForSavingScore.usersModel?.score = currentUserTotal
+        currentUser.score = currentUserTotalScore
+        usersArray.addUserToUsersArrayAndSort(user : currentUser )
+        usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+        
     }
     
     @IBAction func buttonPress_0(_ sender: UIButton) {

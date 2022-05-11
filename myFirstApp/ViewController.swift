@@ -13,7 +13,7 @@ class ViewController: UIViewController { // 2
 
     var valueReceivedFromAddUserNameViewController = UsersArray()
     var usersArray = UsersArray()
-    var currentUser = User(name: "www", score: "www")
+    var currentUser = (name: "", score: 0, isCurrentUser: false)
     
     
     @IBOutlet weak var labelVC: UILabel!
@@ -22,30 +22,31 @@ class ViewController: UIViewController { // 2
     var taskMarkers = [false, false, false, false, false]
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         
-        // загрузив текущий контроллер вытасткиваем из ЮзерДефолтс имя пользователя
-        // сохраненного на предыдущем контроллере
-        let currentUserNameDefaults = UserDefaults.standard
-        let currentUserName = currentUserNameDefaults.object(forKey: "currentUserKey") as! String
+        // при загрузке ViewController присваиваем его свойству usersArray текущее значение из UserDefaults
+        usersArray.getUsersArrayFromUserDefaultsByString()
+        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
         
-        // затем также вытаскиваем счет этого пользователя из другого UserDefaults по сути
-        // ключем будет имя currentUserName вытащеное из UserDefaults в предыдущей конструкции плюс слово "key"
-        let currentUserScoreDefaults = UserDefaults.standard
-        let currentUserScore = currentUserScoreDefaults.object(forKey: currentUserName + "key") as! String
         
+        print("--Это печать usersArray ViewController" )
+        for i in 0..<usersArray.usersArray.count {
+            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
+        }
+        print("--Это конец печати usersArray ViewController" )
+
+        
+        // далее при загрузке ViewController присваиваем свойству currentUser экземпляр класса User из usersArray
+        currentUser = usersArray.getCurrentUserFromUsersArray()
+        print("!!!--- был вызыван метод getCurrentUserFromUsersArray() в рамках класса ViewController")
+        print(" это печать из ViewController (  \(currentUser.name)  )")
         
         // выведем полученное имя пользователя и счет в лейбл
-        labelVC.text = "Привет " + currentUserName + ", пока твой счет равен " + currentUserScore + ", выбери задание и начни тренироваться."
-
-        print(currentUserName)
-
+        labelVC.text = "Привет " + currentUser.name + ", пока твой счет равен " + String(currentUser.score) + ", выбери задание и начни тренироваться."
         
-        super.viewDidLoad()
         labelVC.layer.masksToBounds = true
         labelVC.layer.cornerRadius = 10
-        
-        // Do any additional setup after loading the view.
-        //some comment
+
     }
     
     
@@ -61,7 +62,6 @@ class ViewController: UIViewController { // 2
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         guard let secondViewController = segue.destination as? SecondViewController else {return}
         secondViewController.newBigTask = taskFromModel
-
     }
     
     @IBAction func buttonPress0To5(_ sender: UIButton) {
@@ -81,5 +81,6 @@ class ViewController: UIViewController { // 2
     
     @IBAction func ButtonPressNext(_ sender: UIButton) {
     }
+    
 }
 

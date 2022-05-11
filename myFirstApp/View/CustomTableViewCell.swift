@@ -9,6 +9,7 @@ import UIKit
 
 class CustomTableViewCell: UITableViewCell {
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,6 +32,50 @@ class CustomTableViewCell: UITableViewCell {
         // помощью которого потом извлечем это значение
         userNameForUserDefaults.set(nameLabel.text, forKey: "currentUserKey")
         
+        // создаем переменную типа UsersArray()
+        var usersArray = UsersArray()
+        
+//        // получаем из при помощи метода getUsersArrayFromUserDefaultsByString() из UserDefaults
+        // набор пользователей
+        usersArray.getUsersArrayFromUserDefaultsByString()
+        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса CustomTableViewCell")
+        print("" )
+        
+        print("" )
+        print("--Это печать usersArray CustomTableViewCell" )
+        for i in 0..<usersArray.usersArray.count {
+            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
+        }
+        print("--Это конец печати usersArray CustomTableViewCell" )
+        print("" )
+        
+ //       // изменяем состояние usersArray назначая тетущего пользователя меняя статус на true
+        usersArray.changeCurrentUser(name: nameLabel.text!)
+        print("!!!--- был вызыван метод changeCurrentUser() - в рамках класса CustomTableViewCell")
+        print("" )
+        print("--Это печать usersArray CustomTableViewCell" )
+        for i in 0..<usersArray.usersArray.count {
+            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
+        }
+        print("--Это конец печати usersArray CustomTableViewCell" )
+        print("" )
+        
+ //       // и сохраняем его состояние с измененым
+        usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+        print("!!!--- был вызыван метод saveUsersArrayToUserDefaultsByStringConvert() в рамках класса CustomTableViewCell")
+        print("" )
+        
+        usersArray = UsersArray()
+        usersArray.getUsersArrayFromUserDefaultsByString()
+        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса CustomTableViewCell")
+
+        print("" )
+        print("--Это печать usersArray CustomTableViewCell еще раз запрашиваем после сохранения и печатаем" )
+        for i in 0..<usersArray.usersArray.count {
+            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
+        }
+        print("--Это конец печати usersArray CustomTableViewCell" )
+        print("" )
         
         
     }
