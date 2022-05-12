@@ -74,8 +74,6 @@ class UsersArray {
             for user in newValue {
                 usersArrayToString += ((user.name + "," + String(user.score) + "," + String(user.isCurrentUser)) + ";")
             }
-            print (" saveUsersArrayToUserDefaultsByStringConvert()")
-            print ("пытаемся засунуть usersArrayToString в UserDefault при помощи метода saveUsersArrayToUserDefaultsByStringConvert()")
             print (usersArrayToString)
             userDefaults.set(usersArrayToString, forKey: "keyForUserDefaults")
         }
@@ -83,20 +81,12 @@ class UsersArray {
     
     // метод возвращает экземпляр класcа User текущего пользователя в виде кортежа из массива пользователей newUsersArray
     func getCurrentUserFromUsersArray () -> (name : String, score : Int, isCurrentUser : Bool) {
-        let name : String = ""
-        let score : Int = 0
-        let isCurrentUser : Bool = false
-        var currentUser = ("", 0, false)
+        var currentUser : (String, Int, Bool) = ("", 0, false)
         for i in 0..<newUsersArray.count {
-            let user = newUsersArray[i]
-            print("\(i) - \(user.name) - \(user.isCurrentUser)")
             if newUsersArray[i].isCurrentUser == true {
                 currentUser.0 = (newUsersArray[i]).name
                 currentUser.1 = newUsersArray[i].score
                 currentUser.2 = newUsersArray[i].isCurrentUser
-                print(name)
-                print(score)
-                print(String(isCurrentUser))
             }
         }
         return currentUser
