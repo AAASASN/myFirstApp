@@ -48,8 +48,8 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // обновляем usersArray вытаскивая из UserDefaults его текущее состояние
-        usersArray.getUsersArrayFromUserDefaultsByString()
+//        // обновляем usersArray вытаскивая из UserDefaults его текущее состояние
+//        usersArray.getUsersArrayFromUserDefaultsByString()
         
         // обновляем currentUser помещая в него текущего пользователя из usersArray
         currentUser = usersArray.getCurrentUserFromUsersArray()
@@ -253,7 +253,7 @@ class SecondViewController: UIViewController {
     @IBAction func buttonBack(_ sender: UIButton) {
         currentUser.score = currentUserTotalScore
         usersArray.addUserToUsersArrayAndSort(user : currentUser )
-        usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+//      usersArray.saveUsersArrayToUserDefaultsByStringConvert()
         
     }
     

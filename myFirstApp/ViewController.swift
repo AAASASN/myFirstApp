@@ -24,14 +24,14 @@ class ViewController: UIViewController { // 2
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // при загрузке ViewController присваиваем его свойству usersArray текущее значение из UserDefaults
-        usersArray.getUsersArrayFromUserDefaultsByString()
-        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
-        
+//        // при загрузке ViewController присваиваем его свойству usersArray текущее значение из UserDefaults
+//        usersArray.getUsersArrayFromUserDefaultsByString()
+//        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
+//        
         
         print("--Это печать usersArray ViewController" )
-        for i in 0..<usersArray.usersArray.count {
-            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
+        for i in 0..<usersArray.newUsersArray.count {
+            print("\(i) - \((usersArray.newUsersArray)[i].name) - \((usersArray.newUsersArray)[i].isCurrentUser)")
         }
         print("--Это конец печати usersArray ViewController" )
 

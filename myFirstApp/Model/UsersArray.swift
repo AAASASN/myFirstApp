@@ -9,87 +9,87 @@ import Foundation
 
 class UsersArray {
     
-    var usersArray = [(name : String, score : Int, isCurrentUser : Bool)]() 
-    
-    
     // В userDefaults будут храниться состояния свойста usersArray
-    let userDefaults1 = UserDefaults.standard
+    let userDefaults = UserDefaults.standard
     
-    
-    // Метод будет вытаскивать строку из UserDefaults и собирать его в массив usersArray
-    func getUsersArrayFromUserDefaultsByString(){
+
+    var newUsersArray : [(name : String, score : Int, isCurrentUser : Bool)] {
         
-        if  let usersArrayAsString = userDefaults1.string(forKey: "keyForUserDefaults") {
-                        
-            if usersArrayAsString.count != 0 {
-                
-                var oneUserString : String = ""
-                
-                for char in usersArrayAsString {
-                    if char != ";" {
-                        oneUserString += String(char)
-                    } else {
- 
-                        var comma = 0
-                        var user = ("", 0, false)
-                        var oneUserName = String("")
-                        var oneUserScore = String("")
-                        var oneUserIsCurrentUser = String("")
-                        
-                        for char in oneUserString {
-  
-                            switch comma {
+        get {
+            var someUsersArray = [(name : String, score : Int, isCurrentUser : Bool)]()
+            
+            if  let usersArrayAsString = userDefaults.string(forKey: "keyForUserDefaults") {
+                            
+                if usersArrayAsString.count != 0 {
+                    
+                    var oneUserString : String = ""
+                    
+                    for char in usersArrayAsString {
+                        if char != ";" {
+                            oneUserString += String(char)
+                        } else {
+     
+                            var comma = 0
+                            var user = ("", 0, false)
+                            var oneUserName = String("")
+                            var oneUserScore = String("")
+                            var oneUserIsCurrentUser = String("")
+                            
+                            for char in oneUserString {
+      
+                                switch comma {
 
-                            case 0 :
-                                if char != "," {
-                                    oneUserName += String(char)
-                                } else {
-                                    user.0 = oneUserName
-                                    comma += 1
-                                    }
+                                case 0 :
+                                    if char != "," {
+                                        oneUserName += String(char)
+                                    } else {
+                                        user.0 = oneUserName
+                                        comma += 1
+                                        }
 
-                            case 1 :
-                                if char != "," {
-                                    oneUserScore += String(char)
-                                } else {
-                                    if let intOneUserScore = Int(oneUserScore){
-                                        user.1 = intOneUserScore
+                                case 1 :
+                                    if char != "," {
+                                        oneUserScore += String(char)
+                                    } else {
+                                        if let intOneUserScore = Int(oneUserScore){
+                                            user.1 = intOneUserScore
+                                            
+                                        }
                                         
-                                    }
-                                    
-                                    comma += 1
-                                    }
+                                        comma += 1
+                                        }
 
-                            case 2 :
-                                oneUserIsCurrentUser += String(char)
-                                //print("!!!!!!!!!!!!!!!!!!!!!!")
-                                //print(oneUserIsCurrentUser)
-                                if oneUserIsCurrentUser == "true" {user.2 = true}
-                                if oneUserIsCurrentUser == "false" {user.2 = false}
+                                case 2 :
+                                    oneUserIsCurrentUser += String(char)
+                                    //print("!!!!!!!!!!!!!!!!!!!!!!")
+                                    //print(oneUserIsCurrentUser)
+                                    if oneUserIsCurrentUser == "true" {user.2 = true}
+                                    if oneUserIsCurrentUser == "false" {user.2 = false}
 
-                            default:
-                                break
+                                default:
+                                    break
+                                }
+                                oneUserString = ""
                             }
-                            oneUserString = ""
+                            someUsersArray.append(user)
                         }
-                        usersArray.append(user)
                     }
-                }
-            } else { return }
+                } else { return someUsersArray }
+            }
+            return someUsersArray
         }
-    }
-    
-    // Метод будет принимать массив usersArray, преобразовывать его в строку и созранять в UserDefaults
-    func saveUsersArrayToUserDefaultsByStringConvert() {
-        userDefaults1.removeObject(forKey: "keyForUserDefaults")
-        var usersArrayToString : String = ""
-        for user in usersArray {
-            usersArrayToString += ((user.name + "," + String(user.score) + "," + String(user.isCurrentUser)) + ";")
+        
+        set {
+            userDefaults.removeObject(forKey: "keyForUserDefaults")
+            var usersArrayToString : String = ""
+            for user in newValue {
+                usersArrayToString += ((user.name + "," + String(user.score) + "," + String(user.isCurrentUser)) + ";")
+            }
+            print (" saveUsersArrayToUserDefaultsByStringConvert()")
+            print ("пытаемся засунуть usersArrayToString в UserDefault при помощи метода saveUsersArrayToUserDefaultsByStringConvert()")
+            print (usersArrayToString)
+            userDefaults.set(usersArrayToString, forKey: "keyForUserDefaults")
         }
-        print (" saveUsersArrayToUserDefaultsByStringConvert()")
-        print ("пытаемся засунуть usersArrayToString в UserDefault при помощи метода saveUsersArrayToUserDefaultsByStringConvert()")
-        print (usersArrayToString)
-        userDefaults1.set(usersArrayToString, forKey: "keyForUserDefaults")
     }
     
     // метод возвращает экземпляр класcа User текущего пользователя
@@ -100,13 +100,13 @@ class UsersArray {
         let isCurrentUser : Bool = false
         var currentUser = ("", 0, false)
         
-        for i in 0..<usersArray.count {
-            let user = usersArray[i]
+        for i in 0..<newUsersArray.count {
+            let user = newUsersArray[i]
             print("\(i) - \(user.name) - \(user.isCurrentUser)")
-            if usersArray[i].isCurrentUser == true {
-                currentUser.0 = (usersArray[i]).name
-                currentUser.1 = usersArray[i].score
-                currentUser.2 = usersArray[i].isCurrentUser
+            if newUsersArray[i].isCurrentUser == true {
+                currentUser.0 = (newUsersArray[i]).name
+                currentUser.1 = newUsersArray[i].score
+                currentUser.2 = newUsersArray[i].isCurrentUser
                 print(name)
                 print(score)
                 print(String(isCurrentUser))
@@ -124,7 +124,7 @@ class UsersArray {
     // метод для проверки есть ли пользователь с именем string : в массиве usersArray нашего класса UsersArray
     func isItemInArrayInClassUsersArray(string : String) -> Bool{
         var usersCount = 0
-        for item in usersArray {
+        for item in newUsersArray {
             if item.name == string {
                 usersCount += 1
             }
@@ -141,40 +141,39 @@ class UsersArray {
     func addUserToUsersArrayAndSort(user : (name : String, score : Int, isCurrentUser : Bool)) {
         
         var removeUserIndex : Int?
-        for i in 0..<usersArray.count {
-            if usersArray[i].name == user.name {
+        for i in 0..<newUsersArray.count {
+            if newUsersArray[i].name == user.name {
                 removeUserIndex = i
             }
         }
+        
         if let ind = removeUserIndex {
-            usersArray.remove(at: ind)
+            newUsersArray.remove(at: ind)
         }
         
-        usersArray.append(user)
+        newUsersArray.append(user)
         
         // сортировка проводится при помощи метода .sorted и клоужера который является параметром одной из реализаций
         // метода .sorted и указывает на параметр .name в кортеже user по которому и сравниваются эти два пользователя
-        let uaSorted = usersArray.sorted { (p1, p2) -> Bool in
+        let uaSorted = newUsersArray.sorted { (p1, p2) -> Bool in
             p1.name > p2.name  // поскольку строка в теле клоужера одна слово return можно не писать, возвращается true/false
         }
-        usersArray = uaSorted
+        newUsersArray = uaSorted
     }
     
     // назначение или изменение текущего пользователя с дальнейшем сохранением в UserDefaults
     func changeCurrentUser (name : String) {
         // проверка всех элементов массива usersArray и назначение всем пользователям в поле isCurrentUser
         // на значение false
-        for i in 0..<usersArray.count {
-            usersArray[i].isCurrentUser = false 
+        for i in 0..<newUsersArray.count {
+            newUsersArray[i].isCurrentUser = false
         }
         // затем находим пользователя с именем name и в его поле isCurrentUser назначаем true
-        for i in 0..<usersArray.count {
-            if usersArray[i].name == name {
-                usersArray[i].isCurrentUser = true
+        for i in 0..<newUsersArray.count {
+            if newUsersArray[i].name == name {
+                newUsersArray[i].isCurrentUser = true
             }
         }
     }
- 
-    
 }
 

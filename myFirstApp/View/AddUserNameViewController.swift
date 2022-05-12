@@ -26,18 +26,18 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     @objc override func viewDidLoad() {
         super.viewDidLoad()
         
-        // этот метод вытаскивает из UserDefaults сохраненное значение массива пользователей
-        usersArray.getUsersArrayFromUserDefaultsByString()
-        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
-
-
-        print("" )
-        print("--Это печать usersArray после viewDidLoad в AddUserNameViewController" )
-        for i in 0..<usersArray.usersArray.count {
-            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
-        }
-        print("--Это конец печати usersArray после viewDidLoad в AddUserNameViewController" )
-        print("" )
+//        // этот метод вытаскивает из UserDefaults сохраненное значение массива пользователей
+//        usersArray.getUsersArrayFromUserDefaultsByString()
+//        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
+//
+//
+//        print("" )
+//        print("--Это печать usersArray после viewDidLoad в AddUserNameViewController" )
+//        for i in 0..<usersArray.usersArray.count {
+//            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
+//        }
+//        print("--Это конец печати usersArray после viewDidLoad в AddUserNameViewController" )
+//        print("" )
   
         tableView.dataSource = self
         tableView.delegate = self
@@ -45,7 +45,7 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         initialSetup()  // вызовем метод для отслеживания уведомления о появлении клавиатуры
         
         
-        if usersArray.usersArray.count == 0 {
+        if usersArray.newUsersArray.count == 0 {
             upLabel.text = "Создайте нового пользователя"
         } else {
             upLabel.text = "Выберите пользователя"
@@ -147,8 +147,8 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
                 // если поле не пустое добавляем пользователя в массив при помощи метода addUserToUsersArrayAndSort
                 usersArray.addUserToUsersArrayAndSort(user: (name: textFieldForUserName.text!, score: 0, isCurrentUser: false))
                 
-                // сохраняем массив пользователей в строку и печатаем в консоль
-                usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+//                // сохраняем массив пользователей в строку и печатаем в консоль
+//                usersArray.saveUsersArrayToUserDefaultsByStringConvert()
                 
                 // сразу после добавления пользователя в массив обновляем tableView
                 tableView.reloadData()
@@ -171,7 +171,7 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
     //  *** Логика работы таблицы ***
     // этот обязательный метод возвращает нам количество строк в секции таблицы
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usersArray.usersArray.count
+        return usersArray.newUsersArray.count
     }
     
     // этот обязательный метод возвращает ячейку таблицы вместе с содержимым, и вызывается он столько раз сколько у нас ячеек в таблице, каждый раз когда он будет вызываться он будет брать UITableViewCell для соответствующего элемента по индексу IndexPath
@@ -183,7 +183,7 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         // здесь можно вывести данные в ячейку слева и справа, заранее выбрав в сториборде в стилях ячейки вариант Right Detail
         
         // создаем переменную и помещаем в нее один экземпляр массива по номеру indexPath.row
-        let model = usersArray.usersArray[indexPath.row]
+        let model = usersArray.newUsersArray[indexPath.row]
         
         cell.nameLabel.text = model.name
         cell.scoreLabel.text = String(model.score)
@@ -214,10 +214,10 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         let deleteAction = UIContextualAction(style: .normal, title:  "Удалить профиль", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in success(true)
             
             // remove the item from the data model
-            self.usersArray.usersArray.remove(at: indexPath.row)
+            self.usersArray.newUsersArray.remove(at: indexPath.row)
             
-            // сохраняем массив пользователей в строку и печатаем в консоль
-            self.usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+//            // сохраняем массив пользователей в строку и печатаем в консоль
+//            self.usersArray.saveUsersArrayToUserDefaultsByStringConvert()
             
             // delete the table view row
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -270,12 +270,14 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
                     
                 } else {
                     // если поле не пустое то вносим изменения в имя пользователя и обновляем таблицу
-                    var user = usersArray.usersArray.remove(at: indexPath.row)
+                    var user = usersArray.newUsersArray.remove(at: indexPath.row)
                     user.name = newUserName
-                    usersArray.usersArray.append(user)
+                    usersArray.newUsersArray.append(user)
                     self.tableView.reloadData()
-                    // сохраняем массив пользователей в строку и печатаем в консоль
-                    self.usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+                    
+//                    // сохраняем массив пользователей в строку и печатаем в консоль
+//                    self.usersArray.saveUsersArrayToUserDefaultsByStringConvert()
+                    
                 }
             }
             
