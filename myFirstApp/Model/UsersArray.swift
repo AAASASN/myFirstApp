@@ -12,33 +12,28 @@ class UsersArray {
     // В userDefaults будут храниться состояния свойста usersArray
     let userDefaults = UserDefaults.standard
     
-
+    // это основное свойство класса, в нем будет храниться массив всех пользователей, пользователь описан в виде кортежа
     var newUsersArray : [(name : String, score : Int, isCurrentUser : Bool)] {
         
+        // задаем геттер, он будет возвращать экземпляр массива пользователей вычисляемый из
+        // свойства userDefaults. В userDefaults он хранится в виде строки, поэтому здесь
+        // реализован механизм конвертации из массива в строку
         get {
             var someUsersArray = [(name : String, score : Int, isCurrentUser : Bool)]()
-            
             if  let usersArrayAsString = userDefaults.string(forKey: "keyForUserDefaults") {
-                            
                 if usersArrayAsString.count != 0 {
-                    
                     var oneUserString : String = ""
-                    
                     for char in usersArrayAsString {
                         if char != ";" {
                             oneUserString += String(char)
                         } else {
-     
                             var comma = 0
                             var user = ("", 0, false)
                             var oneUserName = String("")
                             var oneUserScore = String("")
                             var oneUserIsCurrentUser = String("")
-                            
                             for char in oneUserString {
-      
                                 switch comma {
-
                                 case 0 :
                                     if char != "," {
                                         oneUserName += String(char)
@@ -46,26 +41,19 @@ class UsersArray {
                                         user.0 = oneUserName
                                         comma += 1
                                         }
-
                                 case 1 :
                                     if char != "," {
                                         oneUserScore += String(char)
                                     } else {
                                         if let intOneUserScore = Int(oneUserScore){
                                             user.1 = intOneUserScore
-                                            
                                         }
-                                        
                                         comma += 1
                                         }
-
                                 case 2 :
                                     oneUserIsCurrentUser += String(char)
-                                    //print("!!!!!!!!!!!!!!!!!!!!!!")
-                                    //print(oneUserIsCurrentUser)
                                     if oneUserIsCurrentUser == "true" {user.2 = true}
                                     if oneUserIsCurrentUser == "false" {user.2 = false}
-
                                 default:
                                     break
                                 }
@@ -79,6 +67,7 @@ class UsersArray {
             return someUsersArray
         }
         
+        // сетер при каждом изменеии массива сохранет его в userDefaults в виде строки
         set {
             userDefaults.removeObject(forKey: "keyForUserDefaults")
             var usersArrayToString : String = ""
@@ -92,14 +81,12 @@ class UsersArray {
         }
     }
     
-    // метод возвращает экземпляр класcа User текущего пользователя
+    // метод возвращает экземпляр класcа User текущего пользователя в виде кортежа из массива пользователей newUsersArray
     func getCurrentUserFromUsersArray () -> (name : String, score : Int, isCurrentUser : Bool) {
-        
         let name : String = ""
         let score : Int = 0
         let isCurrentUser : Bool = false
         var currentUser = ("", 0, false)
-        
         for i in 0..<newUsersArray.count {
             let user = newUsersArray[i]
             print("\(i) - \(user.name) - \(user.isCurrentUser)")
@@ -112,12 +99,6 @@ class UsersArray {
                 print(String(isCurrentUser))
             }
         }
-        //let currentUser = User(name: name , score: score , isCurrentUser: isCurrentUser)
-        print("---reterned---")
-        print(currentUser.0)
-        print(currentUser.1)
-        print(currentUser.2)
-        print("-------------")
         return currentUser
     }
     
@@ -139,18 +120,15 @@ class UsersArray {
     // метод который будет добавлять пользователя в массив usersArray нашего класса UsersArray (или обновлять его если
     // такой пользователь уже есть в массиве)и затем сразу сортировать его
     func addUserToUsersArrayAndSort(user : (name : String, score : Int, isCurrentUser : Bool)) {
-        
         var removeUserIndex : Int?
         for i in 0..<newUsersArray.count {
             if newUsersArray[i].name == user.name {
                 removeUserIndex = i
             }
         }
-        
         if let ind = removeUserIndex {
             newUsersArray.remove(at: ind)
         }
-        
         newUsersArray.append(user)
         
         // сортировка проводится при помощи метода .sorted и клоужера который является параметром одной из реализаций
@@ -163,8 +141,8 @@ class UsersArray {
     
     // назначение или изменение текущего пользователя с дальнейшем сохранением в UserDefaults
     func changeCurrentUser (name : String) {
-        // проверка всех элементов массива usersArray и назначение всем пользователям в поле isCurrentUser
-        // на значение false
+        // проверка всех элементов массива usersArray и назначение всем пользователям в поле
+        // isCurrentUser на значение false
         for i in 0..<newUsersArray.count {
             newUsersArray[i].isCurrentUser = false
         }

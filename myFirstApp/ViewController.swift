@@ -11,36 +11,21 @@ import UIKit
 
 class ViewController: UIViewController { // 2
 
-    var valueReceivedFromAddUserNameViewController = UsersArray()
-    var usersArray = UsersArray()
-    var currentUser = (name: "", score: 0, isCurrentUser: false)
-    
     
     @IBOutlet weak var labelVC: UILabel!
     
+    var valueReceivedFromAddUserNameViewController = UsersArray()
+    var usersArray = UsersArray()
+    var currentUser = (name: "", score: 0, isCurrentUser: false)
     var taskFromModel = [[""]]
     var taskMarkers = [false, false, false, false, false]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // при загрузке ViewController присваиваем его свойству usersArray текущее значение из UserDefaults
-//        usersArray.getUsersArrayFromUserDefaultsByString()
-//        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
-//        
-        
-        print("--Это печать usersArray ViewController" )
-        for i in 0..<usersArray.newUsersArray.count {
-            print("\(i) - \((usersArray.newUsersArray)[i].name) - \((usersArray.newUsersArray)[i].isCurrentUser)")
-        }
-        print("--Это конец печати usersArray ViewController" )
 
-        
         // далее при загрузке ViewController присваиваем свойству currentUser экземпляр класса User из usersArray
         currentUser = usersArray.getCurrentUserFromUsersArray()
-        print("!!!--- был вызыван метод getCurrentUserFromUsersArray() в рамках класса ViewController")
-        print(" это печать из ViewController (  \(currentUser.name)  )")
-        
+
         // выведем полученное имя пользователя и счет в лейбл
         labelVC.text = "Привет " + currentUser.name + ", пока твой счет равен " + String(currentUser.score) + ", выбери задание и начни тренироваться."
         
@@ -48,7 +33,6 @@ class ViewController: UIViewController { // 2
         labelVC.layer.cornerRadius = 10
 
     }
-    
     
     func someFunc(){
         switch taskMarkers {

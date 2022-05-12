@@ -47,20 +47,17 @@ class SecondViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // обновляем usersArray вытаскивая из UserDefaults его текущее состояние
-//        usersArray.getUsersArrayFromUserDefaultsByString()
-        
+
         // обновляем currentUser помещая в него текущего пользователя из usersArray
         currentUser = usersArray.getCurrentUserFromUsersArray()
         
+        // обновляем currentUserTotalScore
         currentUserTotalScore = currentUser.score
         
         // помещаем имя пользователя и счет в верхний лейбл
         labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
         labelTotal.text = String(currentUser.score)
         
-                
         labelSecondVC.layer.masksToBounds = true
         labelSecondVC.layer.cornerRadius = 20
         labelTotalMain.layer.masksToBounds = true
@@ -77,7 +74,6 @@ class SecondViewController: UIViewController {
         label4.layer.cornerRadius = 20
         label5.layer.masksToBounds = true
         label5.layer.cornerRadius = 20
-        
         
         guard let x = newBigTask else {return}
         let a = x[currentTask]
@@ -215,8 +211,6 @@ class SecondViewController: UIViewController {
     }
     
     //    func successTask()  {
-    //
-    //
     //      Еще один способ сдалвать задержку через выполнение кода в отдельнем потоке
     //      let seconds = 3.0
     //        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
@@ -227,8 +221,7 @@ class SecondViewController: UIViewController {
     //            self.button5tapped.backgroundColor = .systemGray3
     //        }
     //     }
-    
-    
+
     func currentUserTotalUpdate(result: Bool){
         if result {
             currentUserTotalScore += 1
@@ -248,13 +241,12 @@ class SecondViewController: UIViewController {
     }
     
     // при нажатии кнопки Назад кроме перехода на предыдущий экран сохраняем игровой
-    // счет currentUserTotalScore в usersArray, а его далее при помощи метода saveUsersArrayToUserDefaultsByStringConvert,
-    // он уже используя встроенный механизм UserDefault сохранит счет в память устройства
+    // счет currentUserTotalScore в usersArray, далее при соритровке методом
+    // addUserToUsersArrayAndSort при обращении к usersArray состояние массива сохранится
+    // при помощи механизма встроенного а гетер
     @IBAction func buttonBack(_ sender: UIButton) {
         currentUser.score = currentUserTotalScore
         usersArray.addUserToUsersArrayAndSort(user : currentUser )
-//      usersArray.saveUsersArrayToUserDefaultsByStringConvert()
-        
     }
     
     @IBAction func buttonPress_0(_ sender: UIButton) {
@@ -273,7 +265,6 @@ class SecondViewController: UIViewController {
             nextTask()
         }
     }
-    
     
     @IBAction func buttonPress_1(_ sender: UIButton) {
         guard let x = newBigTask else {return}
@@ -359,16 +350,4 @@ class SecondViewController: UIViewController {
             nextTask()
         }
     }
-    
-
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

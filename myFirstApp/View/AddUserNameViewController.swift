@@ -10,40 +10,21 @@ import UIKit
 class AddUserNameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var usersArray = UsersArray()
-    
     var currentNameInAddUserNameViewController: String?
-    
     @IBOutlet weak var textFieldForUserName: UITextField!       // создаем IBOutlet для текстого поля для ввода имни нового пользователя
     @IBOutlet weak var nameSaveButtonOutlet: UIButton!          // создаем IBOutlet для кнопки
     @IBOutlet weak var startGameAfterUserSaving: UIButton!
     @IBOutlet weak var backAfterUserSaving: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var upLabel: UILabel!
-    
     
     @objc override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // этот метод вытаскивает из UserDefaults сохраненное значение массива пользователей
-//        usersArray.getUsersArrayFromUserDefaultsByString()
-//        print("!!!--- был вызыван метод getUsersArrayFromUserDefaultsByString() в рамках класса ViewController")
-//
-//
-//        print("" )
-//        print("--Это печать usersArray после viewDidLoad в AddUserNameViewController" )
-//        for i in 0..<usersArray.usersArray.count {
-//            print("\(i) - \((usersArray.usersArray)[i].name) - \((usersArray.usersArray)[i].isCurrentUser)")
-//        }
-//        print("--Это конец печати usersArray после viewDidLoad в AddUserNameViewController" )
-//        print("" )
   
         tableView.dataSource = self
         tableView.delegate = self
         tableView.reloadData()
         initialSetup()  // вызовем метод для отслеживания уведомления о появлении клавиатуры
-        
         
         if usersArray.newUsersArray.count == 0 {
             upLabel.text = "Создайте нового пользователя"
@@ -70,7 +51,7 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    // этот метод будет удалять "наблюдателей" из нашего контродллера, он будет вызываться при выходе из нашего контродллера и его деинициализации
+    // этот метод будет удалять "наблюдателей" из нашего контроллера, он будет вызываться при выходе из нашего контроллера и его деинициализации
     func removeInitialSetup(){
         // отключаем "наблюдателей"
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -111,33 +92,28 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
             let alertController = UIAlertController(title: "Внимание", message: "Имя пользователя не может быть пустым.", preferredStyle: .alert)
             
             // создадим UIAlertAction - он будет создавать кнопку, на ней мы можем задать название для нее
-            // и инициировать события после нажатия на кнопку
-            // при этом передается замыкание, которое
-            // будет выполнено при нажатии на эту кнопку
-            // в нашем случае после нажатия на кнопку OK ничего происходить не будет, просто
-            // будет скрыто сообщение alertController
+            // и инициировать события после нажатия на кнопку при этом можно передать замыкание, которое
+            // будет выполнено при нажатии на эту кнопку в нашем случае после нажатия на кнопку OK ничего
+            // происходить не будет, просто будет скрыто сообщение alertController
             let okAction = UIAlertAction(title: "OK", style: .default)
-            
-      //      { (action) -> Void in
-      //       self.keyboardWillHide ()  // в часности он будет вызывать функцию скрытия клавиатуры
-      //      }
+//                { (action) -> Void in
+//                    // какой-то код замыкания //
+//                }
             
             alertController.addAction(okAction) // добавляем UIAlertAction в UIAlertController
             self.present(alertController, animated: true, completion: nil) // вызываем  UIAlertController
             
         } else { // иначе если имя пользователя не равно == ""
-            
             if usersArray.isItemInArrayInClassUsersArray(string: textFieldForUserName.text!) {
-                // если пользователь с именем введенным в textFieldForUserName уже существует в usersArray отработает alertController сообщив об этом
-                // создадим UIAlertController
+                // если пользователь с именем введенным в textFieldForUserName уже существует в usersArray отработает alertController сообщив
+                // об этом создадим UIAlertController
                 let alertController = UIAlertController(title: "Внимание", message: "Пользователь с таким именем уже существует. Введите другое имя.", preferredStyle: .alert)
                 // создадим UIAlertAction - он будет инициировать события после нажатия на кнопку
                 // в нашем случае после нажатия на кнопку OK ничего происходить не будет, просто
                 // будет скрыто сообщение alertController
                 let okAction = UIAlertAction(title: "OK", style: .default)
-                
 //                { (action) -> Void in
-//                    // self.keyboardWillHide ()  // в часности он будет вызывать функцию скрытия клавиатуры
+//                    // какой-то код замыкания //
 //                }
                 
                 alertController.addAction(okAction) // добавляем UIAlertAction в UIAlertController
@@ -147,9 +123,6 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
                 // если поле не пустое добавляем пользователя в массив при помощи метода addUserToUsersArrayAndSort
                 usersArray.addUserToUsersArrayAndSort(user: (name: textFieldForUserName.text!, score: 0, isCurrentUser: false))
                 
-//                // сохраняем массив пользователей в строку и печатаем в консоль
-//                usersArray.saveUsersArrayToUserDefaultsByStringConvert()
-                
                 // сразу после добавления пользователя в массив обновляем tableView
                 tableView.reloadData()
                 
@@ -158,11 +131,6 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
             // очищаем текстовое поле перед началом очередного ввода
             textFieldForUserName.text! = ""
             upLabel.text = "Выберите пользователя"
-//            // это просто печать в консоль массива usersArray класса
-//            print("--------------------------это просто печать в консоль массива usersArray класса------")
-//            for item in usersArray.usersArray {
-//                print("Имя - \(item.name), счет - \(item.score)")
-//            }
             
         }
     }
@@ -174,77 +142,46 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
         return usersArray.newUsersArray.count
     }
     
-    // этот обязательный метод возвращает ячейку таблицы вместе с содержимым, и вызывается он столько раз сколько у нас ячеек в таблице, каждый раз когда он будет вызываться он будет брать UITableViewCell для соответствующего элемента по индексу IndexPath
+    // этот обязательный метод возвращает ячейку таблицы вместе с содержимым, и вызывается он столько раз сколько у нас
+    // ячеек в таблице, каждый раз когда он будет вызываться он будет брать UITableViewCell для соответствующего элемента по индексу IndexPath
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // тут мы создаем ячейку которую будем возвращать каждый раз, ей мы присваиваем то что возвращает метод dequeueReusableCell из tableView , указывая индекс "Cell1" из сториборда
+        // тут мы создаем ячейку которую будем возвращать каждый раз, ей мы присваиваем то что возвращает
+        // метод dequeueReusableCell из tableView , указывая индекс "Cell1" из сториборда
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1", for: indexPath) as! CustomTableViewCell
-        
-        // здесь можно вывести данные в ячейку слева и справа, заранее выбрав в сториборде в стилях ячейки вариант Right Detail
-        
+                
         // создаем переменную и помещаем в нее один экземпляр массива по номеру indexPath.row
         let model = usersArray.newUsersArray[indexPath.row]
-        
         cell.nameLabel.text = model.name
         cell.scoreLabel.text = String(model.score)
         // также в ячейку можно вывести картинку через свойство .image
         // cell.imageView?.image = UIImage(named: "XXXXXXX")
-        
-//        // это нужно для того чтобы на ViewController и затем на SecondViewController передавать счет по конкретному игроку
-//        let userDefaultsForUser = UserDefaults.standard
-//        userDefaultsForUser.set((cell.scoreLabel.text!), forKey: cell.nameLabel.text! + "key")
-//
         return cell
     }
     
-//    // этот метод позволяет выполнить какое либо действие при нажатии на ячейку на экране
-//    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-//        tableView.deselectRow(at: indexPath, animated: true)
-//
-//        let row = indexPath.row
-//        self.performSegue(withIdentifier: "idnt1", sender: self)
-//        print(indexPath[row])
-//    }
-    
-    // этот метод - один из вариантов реализации удаления ячейки свапом влево, возвращает переменную типа UISwipeActionsConfiguration в котом реализованна позможность задать текст
+    // этот метод - один из вариантов реализации удаления ячейки свапом влево, возвращает переменную типа UISwipeActionsConfiguration
+    // в котом реализованна позможность задать текст
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
         
         let deleteAction = UIContextualAction(style: .normal, title:  "Удалить профиль", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in success(true)
             
             // remove the item from the data model
             self.usersArray.newUsersArray.remove(at: indexPath.row)
-            
-//            // сохраняем массив пользователей в строку и печатаем в консоль
-//            self.usersArray.saveUsersArrayToUserDefaultsByStringConvert()
-            
+
             // delete the table view row
             tableView.deleteRows(at: [indexPath], with: .fade)
             
         })
-        
         deleteAction.backgroundColor = .red
-        
-//        // это просто печать в консоль массива usersArray класса
-//        print("--------------------------------")
-//        for item in usersArray.usersArray {
-//            print("Имя - \(item.name), счет - \(item.score)")
-//        }
-        
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
     // Возвращает действия смахивания вправо для отображения на левом крае строки.
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-    {
-        
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title:  "Изменить имя пользователя", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in success(true)
-            
             // код по внесению изменений
             // создание Alert Controller
             let alertController = UIAlertController(title: "Изменить имя пользователя", message: "Введите новое имя", preferredStyle: .alert)
-            
             // добавляем первое текстовое поле в Alert Controller
             alertController.addTextField { textField in
                 textField.placeholder = "новое имя" }
@@ -260,27 +197,21 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
                 // проверяем не пытаемся ли мы сохранить пустое имя, если да то появляется уведомление что это невозможно
                 if alertController.textFields?[0].text == "" {
                     // создадим UIAlertController
-                    let alertController = UIAlertController(title: "Внимание", message: "Имя не может быть пустым.", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Внимание!", message: "Имя не может быть пустым.", preferredStyle: .alert)
                     // создадим UIAlertAction - он будет инициировать события после нажатия на кнопку
                     let okAction = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
-                        // self.keyboardWillHide ()  // в часности он будет вызывать функцию скрытия клавиатуры
+                        // здесь бы мог быть какой-то код выполняемый после нажатия на кнопку OK, но его нет
                     }
                     alertController.addAction(okAction) // добавляем UIAlertAction в UIAlertController
                     self.present(alertController, animated: true, completion: nil) // вызываем  UIAlertController
-                    
                 } else {
                     // если поле не пустое то вносим изменения в имя пользователя и обновляем таблицу
                     var user = usersArray.newUsersArray.remove(at: indexPath.row)
                     user.name = newUserName
                     usersArray.newUsersArray.append(user)
                     self.tableView.reloadData()
-                    
-//                    // сохраняем массив пользователей в строку и печатаем в консоль
-//                    self.usersArray.saveUsersArrayToUserDefaultsByStringConvert()
-                    
                 }
             }
-            
             // кнопка отмены
             let cancelButton = UIAlertAction(title: "Отменить", style: .default, handler: nil)
             
@@ -290,64 +221,9 @@ class AddUserNameViewController: UIViewController, UITableViewDataSource, UITabl
             // отображаем Alert Controller
             self.present(alertController, animated: true, completion: nil)
         })
-        
         editAction.backgroundColor = .blue
-        
         return UISwipeActionsConfiguration(actions: [editAction])
-        
     }
-    
-//    Здесь попытка передать данные на ViewController через сегвей  (не работает)
-//
-//    // при нажатии на кнопку в кастомной ячейке будет совершен переход на другой
-//    // экран (контроллер ViewController) по сивею от кнопки, эта конструкция передаст
-//    // данные о выбраном пользователе и массив данных обо всех пользователях из UserDefaults (пока не реализовано)
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-//
-//        let dvc = segue.destination as! ViewController
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell1") as! CustomTableViewCell
-//        //let cell = tableView.indexPath(for: <#T##UITableViewCell#>)
-//        print (cell.nameLabel.text as Any)
-//        print (cell.scoreLabel.text as Any)
-//
-//        dvc.currentUser = User(name: cell.nameLabel.text!, score: cell.scoreLabel.text!)
-//        dvc.usersArray = usersArray
-//
-//    }
-    
-    
-    
-//
-//    //--------------------------------------------------------------------------------------------------------------
-//    // Попытка реализовать передачу данных от контроллера AddUserNameViewController к контроллеру ViewController
-//
-//    // устанавливаем действие при выделении ячейки
-//
-//
-//    private func tableView(_ tableView: AddUserNameViewController, didSelectRowAt indexPath: IndexPath) {
-//
-//        // выполняем переход. в качестве sender-аргумента советую отправить IndexPath ячейки, откуда отправляете
-//        performSegue(withIdentifier: "ViewController", sender: indexPath)
-//
-//
-//        // после этого осуществляете подготовку к переходу на контроллер
-//        func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//            // Проверяем идентификатор сегвея
-//            switch segue.identifier! {
-//            case "seg1":
-//                let dvc = segue.destination as! ViewController // Это имя контроллера View, на который осуществляется переход
-//
-//                // в данном случае мы передаем переменную usersArray класса UsersArray на наш ViewController помещая его в свойство valueReceivedFromAddUserNameViewController
-//                dvc.valueReceivedFromAddUserNameViewController = usersArray
-//                //dvc.currentUser = indexPath
-//            default:
-//                break
-//            }
-//        }
-//    }
-    //--------------------------------------------------------------------------------------------------------------
 }
 
 
