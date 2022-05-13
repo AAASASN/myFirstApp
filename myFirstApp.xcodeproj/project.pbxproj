@@ -16,6 +16,7 @@
 		11240D84275EBC7D0049486D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11240D83275EBC7D0049486D /* SecondViewController.swift */; };
 		1129E3EF27F59F1A00259D1A /* UsersArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129E3EE27F59F1A00259D1A /* UsersArray.swift */; };
 		1129E3F227F5A1F300259D1A /* AddUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129E3F127F5A1F300259D1A /* AddUserNameViewController.swift */; };
+		11312D8C282E6504002C4BDD /* TasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11312D8B282E6504002C4BDD /* TasksModel.swift */; };
 		1162739527752462006E6449 /* ArrayTask_1_0To5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162739427752462006E6449 /* ArrayTask_1_0To5.swift */; };
 		1162739727752774006E6449 /* ArrayTask_2_5To10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162739627752774006E6449 /* ArrayTask_2_5To10.swift */; };
 		1162739927752AF5006E6449 /* ArrayTask_3_0To10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162739827752AF5006E6449 /* ArrayTask_3_0To10.swift */; };
@@ -34,6 +35,7 @@
 		11240D83275EBC7D0049486D /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		1129E3EE27F59F1A00259D1A /* UsersArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersArray.swift; sourceTree = "<group>"; };
 		1129E3F127F5A1F300259D1A /* AddUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserNameViewController.swift; sourceTree = "<group>"; };
+		11312D8B282E6504002C4BDD /* TasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksModel.swift; sourceTree = "<group>"; };
 		1162739427752462006E6449 /* ArrayTask_1_0To5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTask_1_0To5.swift; sourceTree = "<group>"; };
 		1162739627752774006E6449 /* ArrayTask_2_5To10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTask_2_5To10.swift; sourceTree = "<group>"; };
 		1162739827752AF5006E6449 /* ArrayTask_3_0To10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTask_3_0To10.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				1162739627752774006E6449 /* ArrayTask_2_5To10.swift */,
 				1162739827752AF5006E6449 /* ArrayTask_3_0To10.swift */,
 				1129E3EE27F59F1A00259D1A /* UsersArray.swift */,
+				11312D8B282E6504002C4BDD /* TasksModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			files = (
 				1129E3EF27F59F1A00259D1A /* UsersArray.swift in Sources */,
 				1129E3F227F5A1F300259D1A /* AddUserNameViewController.swift in Sources */,
+				11312D8C282E6504002C4BDD /* TasksModel.swift in Sources */,
 				11240D71275B8F140049486D /* ViewController.swift in Sources */,
 				1162739727752774006E6449 /* ArrayTask_2_5To10.swift in Sources */,
 				11240D6D275B8F140049486D /* AppDelegate.swift in Sources */,

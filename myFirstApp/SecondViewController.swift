@@ -10,12 +10,15 @@ import CloudKit
 
 class SecondViewController: UIViewController {
     
+
+
     var usersArray = UsersArray()
     var currentUser = (name: "", score: 0, isCurrentUser: false)
     var currentUserTotalScore = 0
     var newBigTask: [[String]]?
     var answer = false
     var currentTask = 0
+    var currentTask1 = [String]()
     let buttonsColorFaultRed = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.65)
     let buttonsColorFaultGreen = UIColor(red: 0.00, green: 0.60, blue: 0.44, alpha: 0.81)
     
@@ -45,9 +48,14 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var button5tapped: UIButton!
     
     
+    // свойства для работы с тасками
+    var taskModel = TaskModel()
+    var taskParameters = ((minArgValue: 0, maxArgValue: 0, minAnswerValue: 0, maxAnswerValue: 0, plus: true, minus: true, step: 1))
+    var oneTask = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+  
         // обновляем currentUser помещая в него текущего пользователя из usersArray
         currentUser = usersArray.getCurrentUserFromUsersArray()
         
@@ -75,8 +83,20 @@ class SecondViewController: UIViewController {
         label5.layer.masksToBounds = true
         label5.layer.cornerRadius = 20
         
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
+        // задаем первый пример для вывода на лейблы
+        
+        //---------------------------------------
+        //guard let x = newBigTask else {return}
+        //let a = x[currentTask]
+        currentTask1 = taskModel.getOneTask(tuple: taskParameters)
+        let a = currentTask1
+        //---------------------------------------
+        
+        print("----------------------------")
+        for i in a {
+            print(i)
+        }
+        
         label1.text = a[0]
         label1.backgroundColor = .systemGray3
         label2.text = a[1]
@@ -91,7 +111,7 @@ class SecondViewController: UIViewController {
         button0tapped.backgroundColor = .systemGray3
         button0tapped.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
         
-        
+        // выводим варианты ответов на тайтлы кнопок для ответов
         button1tapped.setTitle(a[6], for: .normal)
         button1tapped.backgroundColor = .systemGray3
         
@@ -116,6 +136,9 @@ class SecondViewController: UIViewController {
         
     }
     
+    // функция для выбора последующего примера из списка заданий
+    // сюда также включена реализация смаргивания посдедних установленных з
+    // начений перед установкой новых
     func nextTask() {
         
         dicForFault  = ["0" : false,
@@ -125,15 +148,27 @@ class SecondViewController: UIViewController {
                         "4" : false,
                         "5" : false]
         
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        label5.text = a[4]
         
+        label5.text = currentTask1[4]
         label5.backgroundColor = buttonsColorFaultGreen
         
-        self.currentTask += 1
-        guard let x = newBigTask else {return}
-        let b = x[currentTask]
+        //---------------------------------------
+        //guard let x = newBigTask else {return}
+        //let a = x[currentTask]
+        currentTask1 = taskModel.getOneTask(tuple: taskParameters)
+        let a = currentTask1
+        //---------------------------------------
+        
+
+        
+//        self.currentTask += 1
+//        guard let x = newBigTask else {return}
+//
+//        //------------------------------------------
+//        //let b = x[currentTask]
+//        currentTask1 = taskModel.getOneTask(tuple: taskParameters)
+//        let b = currentTask1
+//        //-----------------------------------
         
         Timer.scheduledTimer(withTimeInterval: 1.3 , repeats: false) { (_) in
             self.label1.text = ""
@@ -155,10 +190,10 @@ class SecondViewController: UIViewController {
         }
         
         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [self] (_) in
-            self.label1.text = b[0]
-            self.label2.text = b[1]
-            self.label3.text = b[2]
-            self.label4.text = b[3]
+            self.label1.text = a[0]
+            self.label2.text = a[1]
+            self.label3.text = a[2]
+            self.label4.text = a[3]
             self.label5.text = "?"
             self.label5.backgroundColor = .systemGray3
             self.label1.isHidden = false
@@ -166,12 +201,12 @@ class SecondViewController: UIViewController {
             self.label3.isHidden = false
             self.label4.isHidden = false
             self.label5.isHidden = false
-            self.button0tapped.setTitle(b[5], for: .normal)
-            self.button1tapped.setTitle(b[6], for: .normal)
-            self.button2tapped.setTitle(b[7], for: .normal)
-            self.button3tapped.setTitle(b[8], for: .normal)
-            self.button4tapped.setTitle(b[9], for: .normal)
-            self.button5tapped.setTitle(b[10], for: .normal)
+            self.button0tapped.setTitle(a[5], for: .normal)
+            self.button1tapped.setTitle(a[6], for: .normal)
+            self.button2tapped.setTitle(a[7], for: .normal)
+            self.button3tapped.setTitle(a[8], for: .normal)
+            self.button4tapped.setTitle(a[9], for: .normal)
+            self.button5tapped.setTitle(a[10], for: .normal)
             self.button0tapped.isHidden = false
             self.button1tapped.isHidden = false
             self.button2tapped.isHidden = false
@@ -179,12 +214,12 @@ class SecondViewController: UIViewController {
             self.button4tapped.isHidden = false
             self.button5tapped.isHidden = false
             self.labelTotal.text = String(currentUserTotalScore)
-            if self.currentTask >= x.count {
-                self.currentTask = 0
-                self.labelSecondVC.layer.masksToBounds = true
-                self.labelSecondVC.layer.cornerRadius = 20
-                self.labelSecondVC.text = "Ай Молодец !!!"
-            }
+//            if self.currentTask >= x.count {
+//                self.currentTask = 0
+//                self.labelSecondVC.layer.masksToBounds = true
+//                self.labelSecondVC.layer.cornerRadius = 20
+//                self.labelSecondVC.text = "Ай Молодец !!!"
+//            }
         }
         
         
@@ -199,11 +234,8 @@ class SecondViewController: UIViewController {
         
     }
     
-    func checkAnswer(for value: String, currentTask: Int) -> Bool {
-        guard let x = newBigTask else { return false}
-        let v = x[currentTask]
-        
-        if value == v[4]{
+    func checkAnswer(for value: String, currentTask: [String]) -> Bool {
+        if value == currentTask[4]{
             return true
         } else {
             return false
@@ -250,9 +282,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_0(_ sender: UIButton) {
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        answer = checkAnswer(for: a[5], currentTask: currentTask)
+        //guard let x = newBigTask else {return}
+        let a = currentTask1
+        answer = checkAnswer(for: a[5], currentTask: currentTask1)
         if answer == false{
             button0tapped.backgroundColor = buttonsColorFaultRed
             if dicForFault[a[5]] == false {
@@ -267,9 +299,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_1(_ sender: UIButton) {
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        answer = checkAnswer(for: a[6], currentTask: currentTask)
+        //guard let x = newBigTask else {return}
+        let a = currentTask1
+        answer = checkAnswer(for: a[6], currentTask: currentTask1)
         if answer == false{
             button1tapped.backgroundColor = buttonsColorFaultRed
             if dicForFault[a[6]] == false {
@@ -284,9 +316,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_2(_ sender: UIButton) {
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        answer = checkAnswer(for: a[7], currentTask: currentTask)
+        //guard let x = newBigTask else {return}
+        let a = currentTask1
+        answer = checkAnswer(for: a[7], currentTask: currentTask1)
         if answer == false{
             button2tapped.backgroundColor = buttonsColorFaultRed
             if dicForFault[a[7]] == false {
@@ -301,9 +333,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_3(_ sender: UIButton) {
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        answer = checkAnswer(for: a[8], currentTask: currentTask)
+        //guard let x = newBigTask else {return}
+        let a = currentTask1
+        answer = checkAnswer(for: a[8], currentTask: currentTask1)
         if answer == false{
             button3tapped.backgroundColor = buttonsColorFaultRed
             if dicForFault[a[8]] == false {
@@ -318,9 +350,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_4(_ sender: UIButton) {
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        answer = checkAnswer(for: a[9], currentTask: currentTask)
+        //guard let x = newBigTask else {return}
+        let a = currentTask1
+        answer = checkAnswer(for: a[9], currentTask: currentTask1)
         if answer == false{
             button4tapped.backgroundColor = buttonsColorFaultRed
             if dicForFault[a[9]] == false {
@@ -335,9 +367,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_5(_ sender: UIButton) {
-        guard let x = newBigTask else {return}
-        let a = x[currentTask]
-        answer = checkAnswer(for: a[10], currentTask: currentTask)
+        //guard let x = newBigTask else {return}
+        let a = currentTask1
+        answer = checkAnswer(for: a[10], currentTask: currentTask1)
         if answer == false{
             button5tapped.backgroundColor = buttonsColorFaultRed
             if dicForFault[a[10]] == false {
