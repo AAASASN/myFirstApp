@@ -216,9 +216,6 @@
                                         <buttonConfiguration key="configuration" style="filled" title="Начать игру" buttonSize="large">
                                             <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
-                                        <connections>
-                                            <action selector="buttonPress0To10:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UXL-Tr-RYu"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -299,8 +296,8 @@
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="buttonPress0To5:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jdx-VF-m6O"/>
-                                                    <segue destination="acp-gg-Pht" kind="show" animates="NO" id="aB2-2D-gYG"/>
+                                                    <action selector="buttonPressedTask0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="L2M-yR-dNx"/>
+                                                    <segue destination="acp-gg-Pht" kind="show" animates="NO" id="3vr-t1-odc"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLV-kG-0eh">
@@ -313,7 +310,7 @@
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="buttonPress5To10:" destination="BYZ-38-t0r" eventType="touchUpInside" id="u2g-84-AiM"/>
+                                                    <action selector="buttonPressedTask1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KgR-XX-DAY"/>
                                                     <segue destination="acp-gg-Pht" kind="show" animates="NO" id="UJW-sW-EzS"/>
                                                 </connections>
                                             </button>
@@ -327,8 +324,8 @@
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="buttonPress0To10:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IOb-sb-Y9w"/>
-                                                    <segue destination="acp-gg-Pht" kind="show" animates="NO" id="4eo-Oe-tZo"/>
+                                                    <action selector="buttonPressedTask2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oXg-JU-UxT"/>
+                                                    <segue destination="acp-gg-Pht" kind="show" id="XZs-hm-jcZ"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yY-S6-BiD">
@@ -337,9 +334,13 @@
                                                     <constraint firstAttribute="height" constant="80" id="LBA-pX-9Ac"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="-----" buttonSize="large">
+                                                <buttonConfiguration key="configuration" style="filled" title="0 - 15" buttonSize="large">
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressedTask3:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yd6-ZK-JWu"/>
+                                                    <segue destination="acp-gg-Pht" kind="show" id="d4i-ME-fd4"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -357,9 +358,13 @@
                                                     <constraint firstAttribute="height" constant="80" id="b7I-F7-Rrg"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="------" buttonSize="large">
+                                                <buttonConfiguration key="configuration" style="filled" title="10 - 20" buttonSize="large">
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressedTask4:" destination="BYZ-38-t0r" eventType="touchUpInside" id="neK-cN-86G"/>
+                                                    <segue destination="acp-gg-Pht" kind="show" id="k2V-xs-tjI"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cj0-h2-jYw">
                                                 <rect key="frame" x="178" y="0.0" width="142" height="80"/>
@@ -367,9 +372,13 @@
                                                     <constraint firstAttribute="height" constant="80" id="nmd-7T-hU1"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="-----" buttonSize="large">
+                                                <buttonConfiguration key="configuration" style="filled" title="0 - 20" buttonSize="large">
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressedTask5:" destination="BYZ-38-t0r" eventType="touchUpInside" id="362-zT-zjV"/>
+                                                    <segue destination="acp-gg-Pht" kind="show" id="iwT-L9-nrw"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Pv-ra-mtJ">
                                                 <rect key="frame" x="356" y="0.0" width="142" height="80"/>
@@ -377,11 +386,12 @@
                                                     <constraint firstAttribute="height" constant="80" id="9gR-AE-FGl"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="Еще" buttonSize="large">
+                                                <buttonConfiguration key="configuration" style="filled" title="0 -100" buttonSize="large">
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="ButtonPressNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="To0-DM-eDW"/>
+                                                    <action selector="buttonPressedTask6:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6W7-0M-alp"/>
+                                                    <segue destination="acp-gg-Pht" kind="show" animates="NO" id="gOW-dP-jav"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0p-lP-YVn">
@@ -394,7 +404,7 @@
                                                     <color key="baseBackgroundColor" red="0.2978392353" green="0.65246996030000004" blue="0.79835724829999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <segue destination="xoL-ok-nvN" kind="show" animates="NO" id="XyB-GN-ty9"/>
+                                                    <segue destination="xoL-ok-nvN" kind="show" id="om1-EJ-TCh"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -697,9 +707,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aB2-2D-gYG"/>
-        <segue reference="9ms-Zi-kuY"/>
-        <segue reference="XyB-GN-ty9"/>
+        <segue reference="3vr-t1-odc"/>
+        <segue reference="uHH-vO-RJw"/>
+        <segue reference="om1-EJ-TCh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="opaqueSeparatorColor">

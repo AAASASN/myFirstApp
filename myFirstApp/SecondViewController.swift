@@ -15,7 +15,7 @@ class SecondViewController: UIViewController {
     var usersArray = UsersArray()
     var currentUser = (name: "", score: 0, isCurrentUser: false)
     var currentUserTotalScore = 0
-    var newBigTask: [[String]]?
+    //var newBigTask: [[String]]?
     var answer = false
     var currentTask = 0
     var currentTask1 = [String]()
@@ -63,7 +63,8 @@ class SecondViewController: UIViewController {
         currentUserTotalScore = currentUser.score
         
         // помещаем имя пользователя и счет в верхний лейбл
-        labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+        labelSecondVC.text = "Привет " + currentUser.name + ", это задание " + String(taskParameters.minArgValue) + " - " + String(taskParameters.maxArgValue) + ", твой счет равен " + String(currentUserTotalScore) + " , тебе нужно набрать 50 очков "
+        
         labelTotal.text = String(currentUser.score)
         
         labelSecondVC.layer.masksToBounds = true
@@ -137,8 +138,8 @@ class SecondViewController: UIViewController {
     }
     
     // функция для выбора последующего примера из списка заданий
-    // сюда также включена реализация смаргивания посдедних установленных з
-    // начений перед установкой новых
+    // сюда также включена реализация смаргивания последних установленных
+    // значений перед установкой новых
     func nextTask() {
         
         dicForFault  = ["0" : false,
@@ -148,27 +149,11 @@ class SecondViewController: UIViewController {
                         "4" : false,
                         "5" : false]
         
-        
         label5.text = currentTask1[4]
         label5.backgroundColor = buttonsColorFaultGreen
         
-        //---------------------------------------
-        //guard let x = newBigTask else {return}
-        //let a = x[currentTask]
         currentTask1 = taskModel.getOneTask(tuple: taskParameters)
         let a = currentTask1
-        //---------------------------------------
-        
-
-        
-//        self.currentTask += 1
-//        guard let x = newBigTask else {return}
-//
-//        //------------------------------------------
-//        //let b = x[currentTask]
-//        currentTask1 = taskModel.getOneTask(tuple: taskParameters)
-//        let b = currentTask1
-//        //-----------------------------------
         
         Timer.scheduledTimer(withTimeInterval: 1.3 , repeats: false) { (_) in
             self.label1.text = ""
@@ -214,12 +199,7 @@ class SecondViewController: UIViewController {
             self.button4tapped.isHidden = false
             self.button5tapped.isHidden = false
             self.labelTotal.text = String(currentUserTotalScore)
-//            if self.currentTask >= x.count {
-//                self.currentTask = 0
-//                self.labelSecondVC.layer.masksToBounds = true
-//                self.labelSecondVC.layer.cornerRadius = 20
-//                self.labelSecondVC.text = "Ай Молодец !!!"
-//            }
+
         }
         
         
@@ -234,6 +214,7 @@ class SecondViewController: UIViewController {
         
     }
     
+    // проверка введенного ответа
     func checkAnswer(for value: String, currentTask: [String]) -> Bool {
         if value == currentTask[4]{
             return true
@@ -254,6 +235,8 @@ class SecondViewController: UIViewController {
     //        }
     //     }
 
+    
+    
     func currentUserTotalUpdate(result: Bool){
         if result {
             currentUserTotalScore += 1
@@ -282,7 +265,6 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func buttonPress_0(_ sender: UIButton) {
-        //guard let x = newBigTask else {return}
         let a = currentTask1
         answer = checkAnswer(for: a[5], currentTask: currentTask1)
         if answer == false{
