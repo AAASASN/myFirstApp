@@ -17,9 +17,6 @@
 		1129E3EF27F59F1A00259D1A /* UsersArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129E3EE27F59F1A00259D1A /* UsersArray.swift */; };
 		1129E3F227F5A1F300259D1A /* AddUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129E3F127F5A1F300259D1A /* AddUserNameViewController.swift */; };
 		11312D8C282E6504002C4BDD /* TasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11312D8B282E6504002C4BDD /* TasksModel.swift */; };
-		1162739527752462006E6449 /* ArrayTask_1_0To5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162739427752462006E6449 /* ArrayTask_1_0To5.swift */; };
-		1162739727752774006E6449 /* ArrayTask_2_5To10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162739627752774006E6449 /* ArrayTask_2_5To10.swift */; };
-		1162739927752AF5006E6449 /* ArrayTask_3_0To10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162739827752AF5006E6449 /* ArrayTask_3_0To10.swift */; };
 		11D710AE280D9D580088B1AE /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D710AD280D9D580088B1AE /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,9 +33,6 @@
 		1129E3EE27F59F1A00259D1A /* UsersArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersArray.swift; sourceTree = "<group>"; };
 		1129E3F127F5A1F300259D1A /* AddUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserNameViewController.swift; sourceTree = "<group>"; };
 		11312D8B282E6504002C4BDD /* TasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksModel.swift; sourceTree = "<group>"; };
-		1162739427752462006E6449 /* ArrayTask_1_0To5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTask_1_0To5.swift; sourceTree = "<group>"; };
-		1162739627752774006E6449 /* ArrayTask_2_5To10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTask_2_5To10.swift; sourceTree = "<group>"; };
-		1162739827752AF5006E6449 /* ArrayTask_3_0To10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTask_3_0To10.swift; sourceTree = "<group>"; };
 		11D710AD280D9D580088B1AE /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,9 +92,6 @@
 		1162739327752402006E6449 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1162739427752462006E6449 /* ArrayTask_1_0To5.swift */,
-				1162739627752774006E6449 /* ArrayTask_2_5To10.swift */,
-				1162739827752AF5006E6449 /* ArrayTask_3_0To10.swift */,
 				1129E3EE27F59F1A00259D1A /* UsersArray.swift */,
 				11312D8B282E6504002C4BDD /* TasksModel.swift */,
 			);
@@ -181,13 +172,10 @@
 				1129E3F227F5A1F300259D1A /* AddUserNameViewController.swift in Sources */,
 				11312D8C282E6504002C4BDD /* TasksModel.swift in Sources */,
 				11240D71275B8F140049486D /* ViewController.swift in Sources */,
-				1162739727752774006E6449 /* ArrayTask_2_5To10.swift in Sources */,
 				11240D6D275B8F140049486D /* AppDelegate.swift in Sources */,
 				11D710AE280D9D580088B1AE /* CustomTableViewCell.swift in Sources */,
 				11240D77275B8F140049486D /* myFirstApp.xcdatamodeld in Sources */,
-				1162739927752AF5006E6449 /* ArrayTask_3_0To10.swift in Sources */,
 				11240D84275EBC7D0049486D /* SecondViewController.swift in Sources */,
-				1162739527752462006E6449 /* ArrayTask_1_0To5.swift in Sources */,
 				11240D6F275B8F140049486D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

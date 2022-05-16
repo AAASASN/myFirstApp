@@ -241,15 +241,26 @@ class SecondViewController: UIViewController {
         if result {
             currentUserTotalScore += 1
             labelTotal.text = String(currentUserTotalScore)
+            
             // помещаем имя пользователя и счет в верхний лейбл
-            labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+            //labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+            
+            // помещаем имя пользователя и счет в верхний лейбл
+            labelSecondVC.text = "Привет " + currentUser.name + ", это задание " + String(taskParameters.minArgValue) + " - " + String(taskParameters.maxArgValue) + ", твой счет равен " + String(currentUserTotalScore) + " , тебе нужно набрать 50 очков "
+           
             labelTotal.text = String(currentUserTotalScore)
         } else {
             if currentUserTotalScore > 0 {
                 currentUserTotalScore -= 1
                 labelTotal.text = String(currentUserTotalScore)
+                
                 // помещаем имя пользователя и счет в верхний лейбл
-                labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+                //labelSecondVC.text = "Привет " + currentUser.name + " твой счет равен " + String(currentUserTotalScore) + " Нужно решить 40 примеров"
+                
+                // помещаем имя пользователя и счет в верхний лейбл
+                labelSecondVC.text = "Привет " + currentUser.name + ", это задание " + String(taskParameters.minArgValue) + " - " + String(taskParameters.maxArgValue) + ", твой счет равен " + String(currentUserTotalScore) + " , тебе нужно набрать 50 очков "
+               
+                
                 labelTotal.text = String(currentUserTotalScore)
             }
         }

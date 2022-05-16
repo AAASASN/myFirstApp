@@ -27,7 +27,6 @@ class ViewController: UIViewController { // 2
         labelVC.text = "Привет " + currentUser.name + ", пока твой счет равен " + String(currentUser.score) + ", выбери задание и начни тренироваться."
         labelVC.layer.masksToBounds = true
         labelVC.layer.cornerRadius = 10
-
     }
     
     // этот сегвей передает на SecondViewController контеж taskConfig с настройками таска
@@ -38,32 +37,32 @@ class ViewController: UIViewController { // 2
     
     // при нажатии на кнопку в taskConfig присваивается значения кортежа с настройками таска
     @IBAction func buttonPressedTask0(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 0, maxArgValue: 5, minAnswerValue: 0, maxAnswerValue: 5, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 0, maxArgValue: 5, minAnswerValue: 0, maxAnswerValue: 5, plus: true, minus: true, step: 1))
     }
     
     @IBAction func buttonPressedTask1(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 5, maxArgValue: 10, minAnswerValue: 5, maxAnswerValue: 10, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 5, maxArgValue: 10, minAnswerValue: 5, maxAnswerValue: 10, plus: true, minus: true, step: 1))
     }
     
     @IBAction func buttonPressedTask2(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 0, maxArgValue: 10, minAnswerValue: 0, maxAnswerValue: 10, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 0, maxArgValue: 10, minAnswerValue: 0, maxAnswerValue: 10, plus: true, minus: true, step: 1))
     }
     
     @IBAction func buttonPressedTask3(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 10, maxArgValue: 15, minAnswerValue: 10, maxAnswerValue: 15, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 10, maxArgValue: 15, minAnswerValue: 10, maxAnswerValue: 15, plus: true, minus: true, step: 1))
     }
     
     @IBAction func buttonPressedTask4(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 10, maxArgValue: 20, minAnswerValue: 10, maxAnswerValue: 20, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 10, maxArgValue: 20, minAnswerValue: 10, maxAnswerValue: 20, plus: true, minus: true, step: 1))
     }
     
     @IBAction func buttonPressedTask5(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 0, maxArgValue: 20, minAnswerValue: 0, maxAnswerValue: 20, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 0, maxArgValue: 20, minAnswerValue: 0, maxAnswerValue: 20, plus: true, minus: true, step: 1))
     }
     
     
     @IBAction func buttonPressedTask6(_ sender: UIButton) {
-        taskConfig = ((minArgValue: 0, maxArgValue: 100, minAnswerValue: 0, maxAnswerValue: 100, plus: true, minus: false, step: 1))
+        taskConfig = ((minArgValue: 0, maxArgValue: 100, minAnswerValue: 0, maxAnswerValue: 100, plus: true, minus: true, step: 1))
     }
     
     @IBAction func ButtonPressNext(_ sender: UIButton) {
