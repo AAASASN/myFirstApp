@@ -25,7 +25,6 @@ class TaskModel {
         
         // эта функция возваращает массив строк с вариантами ответов
         func getAnswerVariantArray(range: ClosedRange<Int>, answerValue: Int) -> [String] {
-//      func getAnswerVariantArray(minArgValue: Int, maxAnswerValue: Int, answerValue: Int) -> [String] {
             var answerVariantArray = [String]()
             var rnd = String(Int.random(in: range))
             answerVariantArray.append(rnd)

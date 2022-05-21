@@ -64,8 +64,7 @@ class SecondViewController: UIViewController {
         
         // помещаем имя пользователя и счет в верхний лейбл
         labelSecondVC.text = "Привет " + currentUser.name + ", это задание " + String(taskParameters.minArgValue) + " - " + String(taskParameters.maxArgValue) + ", твой счет равен " + String(currentUserTotalScore) + " , тебе нужно набрать 50 очков "
-        
-        labelTotal.text = String(currentUser.score)
+                labelTotal.text = String(currentUser.score)
         
         labelSecondVC.layer.masksToBounds = true
         labelSecondVC.layer.cornerRadius = 20
@@ -110,7 +109,7 @@ class SecondViewController: UIViewController {
         label5.backgroundColor = .systemGray3
         button0tapped.setTitle(a[5], for: .normal)
         button0tapped.backgroundColor = .systemGray3
-        button0tapped.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
+        button0tapped.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 50)
         
         // выводим варианты ответов на тайтлы кнопок для ответов
         button1tapped.setTitle(a[6], for: .normal)
